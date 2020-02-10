@@ -1,5 +1,3 @@
-
-
 #Remap Tool - Analyze CSV
 
 ##Description
