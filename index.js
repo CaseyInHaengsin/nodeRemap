@@ -1,7 +1,15 @@
-const { CSV } = require('./CSV');
+const { readcsv } = require('./readcsv');
+require('dotenv').config();
 
-let test = new CSV();
 
-let readC = test.readcsv('');
-console.log(readC)
+let readC1 = readcsv(process.env.TEST_FILE_PATH);
+let readC2 = readcsv()
+
+readC1.forEach((j) => {
+    console.log(j);
+})
+
+
+
+
 
