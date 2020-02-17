@@ -1,3 +1,5 @@
 node_modules
 .env
 logic.txt
+report*
+courses.csv
