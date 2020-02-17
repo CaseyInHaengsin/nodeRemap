@@ -9,9 +9,7 @@ let canvasArr = [];
 let newDataArr = [];
 
 let unmatchedArr = [];
-let matchedOnKey = [];
-let matchedOnTwo = [];
-let allMatched = [];
+let matched = [];
 
 const csvPath = process.env.TEST_FILE_PATH1;
 const newPath = process.env.TEST_FILE_PATH2
@@ -47,30 +45,49 @@ const findKeys = async (newKeys, canvasKeys) => {
     }
 };
 
+
+const splitInTwo = (csvD) => {
+
+};
+
 const analyzeStep1 = async (newDatacsv, canvasDataCsv, keys) => {
     let allCheck = [];
+    
     newDatacsv.forEach((newRecord) => {
         let test = canvasDataCsv.find((canvasRecord) => {
             
                 keys.forEach((key) => {
+                    
                     if (newRecord[key].toLowerCase() == canvasRecord[key].toLowerCase()){
                         
-                        allCheck.push({
+                        matched.push({
                             newRecord: newRecord,
-                            oldRecord: canvasRecord,
+                            valMatch: newRecord[key],
                             attribute: key,
                             shared: true
+                        })
+                    }
+                    else{
+                        unmatchedArr.push({
+                            newRecord: newRecord,
+                            valMatch: newRecord[key],
+                            attribute: key,
+                            shared: false
                         })
                     }
                     
                 });
                 
+            newDatacsv.shift();
+            
+
+                
                 
                 
         });
         
+        canvasDataCsv.shift();
     });
-    return allCheck;
     
     
 }
@@ -80,6 +97,7 @@ const main = async (fPathCanvas, fPathNew, matchVal) => {
     const newKeys = Object.keys(newData[0]);
     const canvasData = await csv().fromFile(fPathCanvas);
     const fCanvasData = await canvasData;
+    console.log(fCanvasData.length);
     const canvasKeys = Object.keys(canvasData[0]);
    
 
@@ -89,9 +107,12 @@ const main = async (fPathCanvas, fPathNew, matchVal) => {
     
 
     
-    let matches1 = await analyzeStep1(newData, fCanvasData, fCommonKeys);
-    let fmatches1 = await matches1;
-    console.log(fmatches1);
+    await analyzeStep1(newData, fCanvasData, fCommonKeys);
+    console.log(matched.length);
+    console.log(unmatchedArr.length);
+    // matched.forEach((match) => {
+    //     console.log(match);
+    // })
 
 }
 
