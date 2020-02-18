@@ -57,46 +57,13 @@ const analyzeStep1 = async (newDatacsv, canvasDataCsv, keys, matching_val) => {
         let matchOnk = canvasDataCsv.find((el) => {
             return valCheck == el[matching_val]
         });
-        
+        if (matchOnk != undefined){
+            console.log(matchOnk)
+        }else{
+            unmatchedArr.push(newRecord);
+        }
         
     });
-    
-    // newDatacsv.forEach((newRecord) => {
-    //     let test = canvasDataCsv.find((canvasRecord) => {
-            
-    //             keys.forEach((key) => {
-                    
-    //                 if (newRecord[key].toLowerCase() == canvasRecord[key].toLowerCase()){
-                        
-    //                     matched.push({
-    //                         newRecord: newRecord[key],
-    //                         valMatch: canvasRecord[key],
-    //                         attribute: key,
-    //                         shared: true
-    //                     })
-    //                 }
-    //                 else{
-    //                     unmatchedArr.push({
-    //                         newRecord: newRecord[key],
-    //                         unmached: canvasRecord[key],
-    //                         attribute: key,
-    //                         shared: false
-    //                     })
-    //                 }
-                    
-    //             });
-                
-    //         newDatacsv.shift();
-            
-
-                
-                
-                
-    //     });
-        
-    //     canvasDataCsv.shift();
-    // });
-    
     
 }
 
