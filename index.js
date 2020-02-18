@@ -50,7 +50,7 @@ const splitInTwo = (csvD) => {
 
 };
 
-const analyzeStep1 = async (newDatacsv, canvasDataCsv, keys, matching_val) => {
+const analyzeStep1 = async (newDatacsv, canvasDataCsv, matching_val) => {
     let allCheck = [];
     newDatacsv.forEach((newRecord) => {
         let valCheck = newRecord[matching_val];
@@ -82,7 +82,7 @@ const main = async (fPathCanvas, fPathNew, matchVal) => {
     
 
     
-    await analyzeStep1(newData, fCanvasData, fCommonKeys, matchVal);
+    await analyzeStep1(newData, fCanvasData, matchVal);
     // console.log(matched.length);
     // console.log(unmatchedArr);
     //console.log(unmatchedArr.length);
