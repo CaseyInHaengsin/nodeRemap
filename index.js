@@ -9,7 +9,7 @@ let canvasArr = [];
 let newDataArr = [];
 
 let unmatchedArr = [];
-let matched = [];
+let matchedOnKey = [];
 
 const csvPath = process.env.TEST_FILE_PATH1;
 const newPath = process.env.TEST_FILE_PATH2
@@ -20,7 +20,7 @@ const stats = fs.statSync(csvPath);
 const fileSizeMB = size(stats.size, {round: 0});
 console.log(fileSizeMB)
 
-const match_val = 'course_id';
+const match_val = 'user_id';
 
 // let fullAnalysis = async (newRecord, canvasRecord) => {
 //         let keys = Object.keys(newDataArr);
@@ -50,44 +50,52 @@ const splitInTwo = (csvD) => {
 
 };
 
-const analyzeStep1 = async (newDatacsv, canvasDataCsv, keys) => {
+const analyzeStep1 = async (newDatacsv, canvasDataCsv, keys, matching_val) => {
     let allCheck = [];
-    
     newDatacsv.forEach((newRecord) => {
-        let test = canvasDataCsv.find((canvasRecord) => {
+        let valCheck = newRecord[matching_val];
+        let matchOnk = canvasDataCsv.find((el) => {
+            return valCheck == el[matching_val]
+        });
+        
+        
+    });
+    
+    // newDatacsv.forEach((newRecord) => {
+    //     let test = canvasDataCsv.find((canvasRecord) => {
             
-                keys.forEach((key) => {
+    //             keys.forEach((key) => {
                     
-                    if (newRecord[key].toLowerCase() == canvasRecord[key].toLowerCase()){
+    //                 if (newRecord[key].toLowerCase() == canvasRecord[key].toLowerCase()){
                         
-                        matched.push({
-                            newRecord: newRecord,
-                            valMatch: newRecord[key],
-                            attribute: key,
-                            shared: true
-                        })
-                    }
-                    else{
-                        unmatchedArr.push({
-                            newRecord: newRecord,
-                            valMatch: newRecord[key],
-                            attribute: key,
-                            shared: false
-                        })
-                    }
+    //                     matched.push({
+    //                         newRecord: newRecord[key],
+    //                         valMatch: canvasRecord[key],
+    //                         attribute: key,
+    //                         shared: true
+    //                     })
+    //                 }
+    //                 else{
+    //                     unmatchedArr.push({
+    //                         newRecord: newRecord[key],
+    //                         unmached: canvasRecord[key],
+    //                         attribute: key,
+    //                         shared: false
+    //                     })
+    //                 }
                     
-                });
+    //             });
                 
-            newDatacsv.shift();
+    //         newDatacsv.shift();
             
 
                 
                 
                 
-        });
+    //     });
         
-        canvasDataCsv.shift();
-    });
+    //     canvasDataCsv.shift();
+    // });
     
     
 }
@@ -97,7 +105,7 @@ const main = async (fPathCanvas, fPathNew, matchVal) => {
     const newKeys = Object.keys(newData[0]);
     const canvasData = await csv().fromFile(fPathCanvas);
     const fCanvasData = await canvasData;
-    console.log(fCanvasData.length);
+    
     const canvasKeys = Object.keys(canvasData[0]);
    
 
@@ -107,9 +115,10 @@ const main = async (fPathCanvas, fPathNew, matchVal) => {
     
 
     
-    await analyzeStep1(newData, fCanvasData, fCommonKeys);
-    console.log(matched.length);
-    console.log(unmatchedArr.length);
+    await analyzeStep1(newData, fCanvasData, fCommonKeys, matchVal);
+    // console.log(matched.length);
+    // console.log(unmatchedArr);
+    //console.log(unmatchedArr.length);
     // matched.forEach((match) => {
     //     console.log(match);
     // })
